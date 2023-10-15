@@ -3,12 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title>Chat Home</title>
+    <!-- <link rel="stylesheet" href="./css/style.css" /> -->
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <h1>simple chat</h1>
-    <input id="inputText" type="text" />
-    <input type="submit" id="sendButton" />
-    <ul id="messageList"></ul>
+    <div id="chatContainer">
+      <ul id="messageList"></ul>
+      <div id="inputArea">
+        <input id="inputText" type="text" style="flex: 1" />
+        <button id="sendButton">送信</button>
+      </div>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
       // サーバーへ接続
