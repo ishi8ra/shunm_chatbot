@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chat Home</title>
+  </head>
+  <body>
+    <h1>simple chat</h1>
+    <input id="inputText" type="text" />
+    <input type="submit" id="sendButton" />
+    <ul id="messageList"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // サーバーへ接続
+      const socket = io();
+
+      const clearText = () => {
+        document.getElementById("inputText").value = "";
+      };
+
+      const addMessageList = (message) => {
+        const ul = document.getElementById("messageList");
+        const li = document.createElement("li"); //つまり、まだlistはhtmlで要ししてなけど、それを動的に作成するってことか?
+        const text = document.createTextNode(message);
+        li.appendChild(text);
+        ul.appendChild(li);
+      };
+
+      document.getElementById("sendButton").addEventListener("click", () => {
+        let inputMessage = document.getElementById("inputText").value;
+        if (inputMessage === "") {
+          return;
+        }
+        socket.emit("sendMessage", inputMessage);
+        clearText();
+      });
+
+      socket.on("receiveMessage", (message) => {
+        addMessageList(message);
+      });
+    </script>
+  </body>
+</html>
