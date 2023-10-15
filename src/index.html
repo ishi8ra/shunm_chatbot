@@ -43,7 +43,8 @@
         if (inputMessage === "") {
           return;
         }
-        socket.emit("sendMessage", inputMessage);
+        addMessageList(inputMessage, "user-message");
+        socket.emit("sendMessage", inputMessage); // 送るのは、それはそれで必要か。
         clearText();
       });
 
