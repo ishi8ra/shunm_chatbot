@@ -8,14 +8,15 @@
   </head>
   <body>
     <h1>simple chat</h1>
-    <div id="chatContainer">
-      <ul id="messageList"></ul>
+    <div id="container">
+      <div id="chatContainer">
+        <ul id="messageList"></ul>
+      </div>
       <div id="inputArea">
         <input id="inputText" type="text" style="flex: 1" />
         <button id="sendButton">送信</button>
       </div>
     </div>
-
     <script src="/socket.io/socket.io.js"></script>
     <script>
       // サーバーへ接続
@@ -25,12 +26,16 @@
         document.getElementById("inputText").value = "";
       };
 
-      const addMessageList = (message) => {
+      const addMessageList = (message, className) => {
         const ul = document.getElementById("messageList");
-        const li = document.createElement("li"); //つまり、まだlistはhtmlで要ししてなけど、それを動的に作成するってことか?
-        const text = document.createTextNode(message);
-        li.appendChild(text);
-        ul.appendChild(li);
+        if (ul) {
+          const li = document.createElement("li");
+          li.className = className;
+          const text = document.createTextNode(message);
+          li.appendChild(text);
+          ul.appendChild(li);
+          ul.scrollTop = ul.scrollHeight;
+        }
       };
 
       document.getElementById("sendButton").addEventListener("click", () => {
@@ -43,7 +48,17 @@
       });
 
       socket.on("receiveMessage", (message) => {
-        addMessageList(message);
+        addMessageList(message, "bot-message");
+      });
+
+      document.getElementById("sendButton").addEventListener("click", () => {
+        let inputMessage = document.getElementById("inputText").value;
+        if (inputMessage === "") {
+          return;
+        }
+        socket.emit("sendMessage", inputMessage);
+        addMessageList(inputMessage, "user-message");
+        clearText();
       });
     </script>
   </body>

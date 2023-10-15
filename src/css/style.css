@@ -1,39 +1,47 @@
-/* コンテナ */
-#chatContainer {
-  width: 400px;
-  margin: auto;
+/* body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+} */
+
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* メッセージリスト */
+#chatContainer {
+  border: 1px solid black;
+  margin: auto;
+  width: 80%;
+}
+
 #messageList {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
   margin: 0;
+  overflow: auto;
+  height: 400px;
 }
 
-/* メッセージ */
-.message {
+.user-message,
+.bot-message {
+  margin: 10px;
   padding: 10px;
-  margin: 5px;
   border-radius: 10px;
+  max-width: 70%;
 }
 
-/* 送信者のメッセージ */
-.message.sender {
-  background-color: #dcf8c6;
-  text-align: right;
+.user-message {
+  background-color: #f1f1f1;
+  float: right;
+  clear: both;
 }
 
-/* 受信者のメッセージ */
-.message.receiver {
-  background-color: #ffffff;
-}
-
-/* 入力エリア */
-#inputArea {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #ccc;
-  padding: 10px;
+.bot-message {
+  ba`kground-color: #ddd;
+  float: left;
+  clear: both;
 }
