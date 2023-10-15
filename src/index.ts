@@ -12,9 +12,10 @@ const io = socketIo(server);
 
 const PORT = 3000;
 
+app.use(express.static('/app/src'));
+
 app.get("/", (req: Request, res: Response) => {
-  // res.sendFile(path.join(__dirname, 'src', 'index.html'));
-  res.sendFile("/usr/src/app/src/index.html");
+  res.sendFile("/app/src/index.html");
 });
 
 server.listen(PORT, () => {
