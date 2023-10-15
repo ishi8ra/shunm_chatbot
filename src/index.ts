@@ -33,8 +33,12 @@ io.on("connection", (socket: Socket) => {
 
     if (message.includes("こんにちは")) {
       io.emit("receiveMessage", "こんにちはなのだ");
+      
+    } else if(message.includes("こんばんは")) {
+      io.emit("receiveMessage", "こんばんわであります。");
+
     } else {
-      io.emit("receiveMessage", message);
+      io.emit("receiveMessage", "ちょっと何言ってるか分からない.");
     }
   });
 
@@ -44,15 +48,3 @@ io.on("connection", (socket: Socket) => {
   });
 });
 
-// メッセージをDOMに追加する関数
-const addMessageList = (message: string, className: string) => {
-  const ul = document.getElementById("messageList");
-  if (ul) {
-    const li = document.createElement("li");
-    li.className = className;
-    const text = document.createTextNode(message);
-    li.appendChild(text);
-    ul.appendChild(li);
-    ul.scrollTop = ul.scrollHeight;
-  }
-};
