@@ -17,6 +17,12 @@
         <button id="sendButton">送信</button>
       </div>
     </div>
+
+    <div id="userInfo">
+      <p>名前: <span id="userName"></span></p>
+      <p>メールアドレス: <span id="userEmail"></span></p>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
       // サーバーへ接続
@@ -38,6 +44,8 @@
         }
       };
 
+      let currentQuestion = "";
+
       document.getElementById("sendButton").addEventListener("click", () => {
         let inputMessage = document.getElementById("inputText").value;
         if (inputMessage === "") {
@@ -46,20 +54,18 @@
         addMessageList(inputMessage, "user-message");
         socket.emit("sendMessage", inputMessage);
         clearText();
+
+        /// ユーザー入力を記入欄に反映させる。///
+        if (currentQuestion === "名前を入力してください") {
+          document.getElementById("userName").innerText = inputMessage;
+        } else if (currentQuestion === "メールアドレスを入力してください") {
+          document.getElementById("userEmail").innerText = inputMessage;
+        }
       });
 
       socket.on("receiveMessage", (message) => {
         addMessageList(message, "bot-message");
-      });
-
-      document.getElementById("sendButton").addEventListener("click", () => {
-        let inputMessage = document.getElementById("inputText").value;
-        if (inputMessage === "") {
-          return;
-        }
-        socket.emit("sendMessage", inputMessage);
-        addMessageList(inputMessage, "user-message");
-        clearText();
+        currentQuestion = message;
       });
     </script>
   </body>
