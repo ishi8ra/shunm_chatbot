@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import path from "path";
 import { Server, Socket } from 'socket.io';
+import nlp from 'compromise';
 
 const express = require("express");
 const http = require("http");
@@ -30,16 +30,22 @@ io.on("connection", (socket: Socket) => {
   // メッセージを受信したときの処理
   socket.on("sendMessage", (message) => {
     console.log("Message has been sent: ", message);
+    
+    const doc = nlp(message);
 
-    if (message.includes("こんにちは")) {
-      io.emit("receiveMessage", "こんにちはなのだ");
-      
-    } else if(message.includes("こんばんは")) {
-      io.emit("receiveMessage", "こんばんわであります。");
+    if(doc.has('こんにちは')) {
+      io.emit("receiveMessage", "こんにちはなのだ。");
+
+    } else if(doc.has("こんばんは")) {
+      io.emit("receiveMessage", "こんばんはであります。");
+
+    } else if(doc.has("おはよう")){
+      io.emit("receiveMessage", "おはようございます。");
 
     } else {
-      io.emit("receiveMessage", "ちょっと何言ってるか分からない.");
+      io.emit("receiveMessage", "ちょっと何言ってるか分からない。");
     }
+
   });
 
   // ボットからのメッセージを受信したときの処理（フロントエンドで処理する場合）
@@ -47,4 +53,5 @@ io.on("connection", (socket: Socket) => {
     // ここにフロントエンドでの処理を書く
   });
 });
+
 
