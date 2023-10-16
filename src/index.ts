@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Server, Socket } from 'socket.io';
 import nlp from 'compromise';
+import mongoose from 'mongoose';
 
 const express = require("express");
 const http = require("http");
@@ -11,6 +12,14 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 const PORT = 3000;
+
+mongoose.connect('mongodb://mongo:27017/simple_chat')
+  .then(() => {
+    console.log("Successfully connected to MongoDB");
+  })
+  .catch((error) => {
+    console.log("Error connecting to MongoDB: ", error);
+  })
 
 // 静的ファイルを提供するディレクトリを設定
 app.use(express.static('/app/src'));
