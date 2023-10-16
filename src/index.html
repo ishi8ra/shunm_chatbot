@@ -43,6 +43,7 @@
         if (inputMessage === "") {
           return;
         }
+        addMessageList(inputMessage, "user-message");
         socket.emit("sendMessage", inputMessage);
         clearText();
       });
