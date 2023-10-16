@@ -23,14 +23,33 @@ server.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
 
+interface UserInfo {
+  input?: string;
+}
+
+let currentQuestion: string = "";
+let userInfo: UserInfo = {};
+
 // ユーザーが接続したときの処理
 io.on("connection", (socket: Socket) => {
   console.log("user connected");
 
+  io.emit("receiveMessage", "始めまして");
+
+  currentQuestion = "名前を入力してください";
+  io.emit("receiveMessage", currentQuestion);
+
   // メッセージを受信したときの処理
   socket.on("sendMessage", (message) => {
     console.log("Message has been sent: ", message);
+
+    if (currentQuestion === "名前を入力してください") {
+      currentQuestion = "メールアドレスを入力してください";
+      io.emit("receiveMessage", currentQuestion);
+    }
     
+    userInfo["input"] = message;
+
     const doc = nlp(message);
 
     if(doc.has('こんにちは')) {

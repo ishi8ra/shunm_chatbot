@@ -1,11 +1,3 @@
-/* body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-} */
-
 #container {
   display: flex;
   flex-direction: column;
@@ -24,6 +16,12 @@
   margin: 0;
   overflow: auto;
   height: 400px;
+}
+
+#userInfo {
+  border: 1px solid black;
+  margin: auto;
+  width: 80%;
 }
 
 .user-message,
