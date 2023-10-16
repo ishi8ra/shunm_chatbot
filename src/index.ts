@@ -44,15 +44,4 @@ io.on("connection", (socket: Socket) => {
   });
 });
 
-// メッセージをDOMに追加する関数
-const addMessageList = (message: string, className: string) => {
-  const ul = document.getElementById("messageList");
-  if (ul) {
-    const li = document.createElement("li");
-    li.className = className;
-    const text = document.createTextNode(message);
-    li.appendChild(text);
-    ul.appendChild(li);
-    ul.scrollTop = ul.scrollHeight;
-  }
-};
+
