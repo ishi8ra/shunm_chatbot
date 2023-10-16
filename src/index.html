@@ -44,7 +44,7 @@
           return;
         }
         addMessageList(inputMessage, "user-message");
-        socket.emit("sendMessage", inputMessage); // 送るのは、それはそれで必要か。
+        socket.emit("sendMessage", inputMessage);
         clearText();
       });
 
