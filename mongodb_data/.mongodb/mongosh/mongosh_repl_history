@@ -1,7 +1,0 @@
-db.users.find()
-show collections
-use admin
-db.users.find()
-show collections
-use admin
-show databases;
