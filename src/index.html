@@ -23,6 +23,12 @@
       <p>メールアドレス: <span id="userEmail"></span></p>
     </div>
 
+    <div id="registerArea">
+      <input id="registerName" type="text" placeholder="Name" />
+      <input id="registerEmail" type="email" placeholder="Email" />
+      <button id="registerButton">Register</button>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
       // サーバーへ接続
@@ -66,6 +72,22 @@
       socket.on("receiveMessage", (message) => {
         addMessageList(message, "bot-message");
         currentQuestion = message;
+      });
+
+      document.getElementById("registerButton").addEventListener("click", async () => {
+        const userName = document.getElementById("registerName").value;
+        const userEmail = document.getElementById("registerEmail").value;
+
+        const response = await fetch("/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName, userEmail }),
+        });
+
+        const data = await response.json();
+        console.log("data's message: ", data.message);
       });
     </script>
   </body>
